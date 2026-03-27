@@ -1,0 +1,57 @@
+<section>
+  <header
+    class="relative overflow-hidden rounded-2xl border border-emerald-300/20 bg-[radial-gradient(circle_at_20%_10%,rgba(22,242,179,0.16)_0%,transparent_38%),linear-gradient(135deg,#0f1423_0%,#070b14_58%,#05070d_100%)] p-4 shadow-[0_16px_44px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.03)]"
+  >
+    <div
+      class="pointer-events-none absolute inset-0 opacity-15 [background-image:radial-gradient(rgba(255,255,255,0.08)_0.5px,transparent_0.5px)] [background-size:3px_3px]"
+    ></div>
+    <div class="relative z-10">
+      <p class="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.18em] text-white/75">Planificador semanal</p>
+      <h1 class="m-0 text-[1.5rem] font-extrabold leading-[1.05] text-slate-50 md:text-[1.8rem]">Diseña tu rutina</h1>
+      <p class="mt-2 max-w-[48ch] text-[0.92rem] text-slate-200/80">
+        Configurá tu rutina con un flujo rápido: un día a la vez.
+      </p>
+
+      <div class="stats mt-4 grid grid-cols-2 gap-3">
+        <div class="flex flex-col rounded-xl border border-white/10 bg-slate-950/45 px-3 py-2 backdrop-blur-[6px]">
+          <span class="text-[0.72rem] text-slate-200/70">Días activos</span>
+          <span class="mt-0.5 text-[1.3rem] font-bold leading-none text-slate-50">{{ selectedCount() }}</span>
+        </div>
+        <div class="flex flex-col rounded-xl border border-white/10 bg-slate-950/45 px-3 py-2 backdrop-blur-[6px]">
+          <span class="text-[0.72rem] text-slate-200/70">Ejercicios</span>
+          <span class="mt-0.5 text-[1.3rem] font-bold leading-none text-slate-50">{{ totalSelectedExercises() }}</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div
+    class="mt-5 overflow-hidden rounded-2xl border border-[var(--app-border)] bg-[linear-gradient(180deg,color-mix(in_srgb,var(--app-surface)_92%,#020307_8%)_0%,var(--app-surface)_100%)]"
+  >
+    <div *ngFor="let d of weekdays" class="day-row border-b border-[var(--app-border)] last:border-b-0">
+      <div class="flex items-center justify-between gap-3 px-4 py-3">
+        <div>
+          <div class="text-[0.96rem] font-bold text-[var(--app-fg)]">{{ d.label }}</div>
+          <div class="mt-0.5 text-[0.79rem] text-[var(--app-fg-muted)]" *ngIf="hasDay(d.key); else dayOff">
+            {{ getDayMuscleLabel(d.key) }} · {{ dayExerciseCount(d.key) }} ejercicios
+          </div>
+          <ng-template #dayOff>
+            <div class="mt-0.5 text-[0.79rem] text-[var(--app-fg-muted)]">Día sin entrenamiento</div>
+          </ng-template>
+        </div>
+
+        <a
+          [routerLink]="['/rutina/dia', d.key]"
+          class="shrink-0"
+          pButton
+          type="button"
+          [label]="hasDay(d.key) ? 'Editar' : 'Agregar'"
+          [severity]="hasDay(d.key) ? 'contrast' : 'secondary'"
+          size="small"
+          [outlined]="!hasDay(d.key)"
+          [raised]="hasDay(d.key)"
+        ></a>
+      </div>
+    </div>
+  </div>
+</section>

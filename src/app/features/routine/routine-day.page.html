@@ -1,0 +1,208 @@
+<section class="space-y-4">
+  <header class="flex items-start justify-between gap-3">
+    <div>
+      <a
+        routerLink="/rutina"
+        class="inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm text-[var(--app-fg-muted)] hover:bg-[var(--app-surface-2)] hover:text-[var(--app-fg)]"
+      >
+        <span class="pi pi-chevron-left"></span>
+        <span>Rutina</span>
+      </a>
+      <h1 class="mt-2 text-xl font-extrabold tracking-tight text-[var(--app-fg)]">
+        {{ dayLabel() }}
+      </h1>
+      <p class="mt-1 text-sm text-[var(--app-fg-muted)]">
+        Elegí grupos musculares, agregá ejercicios rápido y guardá.
+      </p>
+    </div>
+
+    <button
+      pButton
+      type="button"
+      icon="pi pi-trash"
+      label="Quitar día"
+      severity="danger"
+      [outlined]="true"
+      size="small"
+      class="shrink-0"
+      [disabled]="!hasExistingDay()"
+      (click)="removeDay()"
+    ></button>
+  </header>
+
+  <!-- Paso 1: músculo -->
+  <div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-4">
+    <div class="flex items-center justify-between gap-2">
+      <div>
+        <div class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--app-fg-muted)]">Paso 1</div>
+        <div class="mt-1 text-base font-bold text-[var(--app-fg)]">Grupo muscular</div>
+      </div>
+      <span class="text-xs text-[var(--app-fg-muted)]">Selección múltiple</span>
+    </div>
+
+    <div class="mt-3 grid grid-cols-2 gap-2">
+      <button
+        *ngFor="let m of muscleGroups"
+        type="button"
+        class="rounded-xl border px-2.5 py-1.5 text-[0.82rem] font-semibold transition active:scale-[0.99] min-h-10"
+        [ngClass]="
+          selectedMuscles().includes(m.key)
+            ? 'border-emerald-400 bg-emerald-400/15 text-emerald-200'
+            : 'border-[var(--app-border)] bg-[var(--app-surface-2)] text-[var(--app-fg)]'
+        "
+        (click)="toggleMuscle(m.key)"
+      >
+        {{ m.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Paso 2: catálogo -->
+  <div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-4">
+    <div class="flex items-center justify-between gap-2">
+      <div>
+        <div class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--app-fg-muted)]">Paso 2</div>
+        <div class="mt-1 text-base font-bold text-[var(--app-fg)]">Agregar ejercicios</div>
+      </div>
+      <span class="text-xs text-[var(--app-fg-muted)]">{{ filteredExercises().length }} disponibles</span>
+    </div>
+
+    @if(selectedMuscles().length === 0) {
+      <div class="mt-3 rounded-xl border border-dashed border-[var(--app-border)] bg-[var(--app-surface-2)] p-3 text-sm text-[var(--app-fg-muted)]">
+        Primero elegí uno o más grupos musculares para ver el catálogo.
+      </div>
+    } @else {
+      <div class="mt-3 space-y-2">
+        <div
+          *ngFor="let e of filteredExercises()"
+          class="flex items-center justify-between gap-3 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface-2)] px-3 py-2"
+        >
+          <div class="flex min-w-0 items-center gap-3">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-slate-800 text-slate-400">
+              <img
+                [src]="e.imagen"
+                [alt]="e.nombre"
+                class="h-full w-full object-cover"
+                (error)="onImgError($event)"
+              />
+              <span class="pi pi-bolt text-lg" style="display: none"></span>
+            </div>
+            <div class="min-w-0">
+              <div class="truncate text-sm font-bold text-[var(--app-fg)]">{{ e.nombre }}</div>
+              <div class="text-xs text-[var(--app-fg-muted)]">{{ e.musculo | titlecase }}</div>
+            </div>
+          </div>
+
+          <button
+            pButton
+            type="button"
+            icon="pi pi-plus"
+            size="small"
+            [outlined]="true"
+            (click)="addExercise(e)"
+          ></button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Paso 3: seleccionados -->
+  <div class="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] p-4">
+    <div class="flex items-center justify-between gap-2">
+      <div>
+        <div class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--app-fg-muted)]">Paso 3</div>
+        <div class="mt-1 text-base font-bold text-[var(--app-fg)]">Ejercicios del día</div>
+      </div>
+      <span class="text-xs text-[var(--app-fg-muted)]">Arrastrá para reordenar</span>
+    </div>
+
+    @if(selectedExercises().length === 0) {
+      <div class="mt-3 rounded-xl border border-dashed border-[var(--app-border)] bg-[var(--app-surface-2)] p-3 text-sm text-[var(--app-fg-muted)]">
+        Todavía no agregaste ejercicios.
+      </div>
+    } @else {
+      <div class="mt-3 space-y-2">
+        <div
+          *ngFor="let e of selectedExercises(); let i = index"
+          class="flex w-full items-center gap-2 rounded-xl border border-[var(--app-border)] bg-[var(--app-surface-2)] px-3 py-2.5"
+        >
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-slate-800 text-slate-400">
+            <img
+              [src]="e.imagen"
+              [alt]="e.nombre"
+              class="h-full w-full object-cover"
+              (error)="onImgError($event)"
+            />
+            <span class="pi pi-bolt text-lg" style="display: none"></span>
+          </div>
+
+          <div class="min-w-0 flex-1">
+            <div class="truncate text-sm font-bold leading-snug text-[var(--app-fg)]">{{ e.nombre }}</div>
+            <div class="text-xs text-[var(--app-fg-muted)]">{{ e.musculo | titlecase }}</div>
+          </div>
+
+          <div class="flex shrink-0 items-center gap-1">
+            <button
+              pButton
+              type="button"
+              icon="pi pi-chevron-up"
+              size="small"
+              severity="secondary"
+              [outlined]="true"
+              [disabled]="i === 0"
+              (click)="moveUp(i)"
+              class="!h-7 !w-7 !p-0"
+            ></button>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-chevron-down"
+              size="small"
+              severity="secondary"
+              [outlined]="true"
+              [disabled]="i === selectedExercises().length - 1"
+              (click)="moveDown(i)"
+              class="!h-7 !w-7 !p-0"
+            ></button>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-times"
+              size="small"
+              severity="danger"
+              [outlined]="true"
+              (click)="removeExercise(e.id)"
+              class="!h-7 !w-7 !p-0"
+            ></button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Paso 4: barra inferior -->
+  <div class="sticky bottom-20 z-20">
+    <div
+      class="flex items-center justify-between gap-3 rounded-2xl border border-emerald-400/25 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--app-surface)_88%,#020307_12%)_0%,var(--app-surface)_100%)] p-3 shadow-[0_10px_28px_rgba(0,0,0,0.35)] backdrop-blur"
+    >
+      <div class="min-w-0">
+        <div class="truncate text-sm font-bold text-[var(--app-fg)]">
+          {{ selectedExercises().length }} ejercicios agregados
+        </div>
+        <div class="text-xs text-[var(--app-fg-muted)]">
+          {{ selectedMusclesLabel() }}
+        </div>
+      </div>
+
+      <button
+        pButton
+        type="button"
+        icon="pi pi-check"
+        label="Guardar"
+        class="shrink-0"
+        [disabled]="!canSave()"
+        (click)="save()"
+      ></button>
+    </div>
+  </div>
+</section>

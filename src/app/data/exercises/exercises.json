@@ -1,0 +1,39 @@
+[
+  { "id": "bench_press", "nombre": "Press banca", "musculo": "pecho", "imagen": "assets/exercises/bench_press.jpg" },
+  { "id": "incline_barbell_press", "nombre": "Press inclinado barra", "musculo": "pecho", "imagen": "assets/exercises/incline_barbell_press.jpg" },
+  { "id": "incline_db_press", "nombre": "Press inclinado mancuernas", "musculo": "pecho", "imagen": "assets/exercises/incline_db_press.jpg" },
+  { "id": "decline_press", "nombre": "Press declinado", "musculo": "pecho", "imagen": "assets/exercises/decline_press.jpg" },
+  { "id": "chest_fly", "nombre": "Aperturas con mancuernas", "musculo": "pecho", "imagen": "assets/exercises/chest_fly.jpg" },
+  { "id": "cable_fly", "nombre": "Aperturas en polea", "musculo": "pecho", "imagen": "assets/exercises/cable_fly.jpg" },
+
+  { "id": "lat_pulldown", "nombre": "Jalón al pecho", "musculo": "espalda", "imagen": "assets/exercises/lat_pulldown.jpg" },
+  { "id": "pull_up", "nombre": "Dominadas", "musculo": "espalda", "imagen": "assets/exercises/pull_up.jpg" },
+  { "id": "barbell_row", "nombre": "Remo con barra", "musculo": "espalda", "imagen": "assets/exercises/barbell_row.jpg" },
+  { "id": "seated_row", "nombre": "Remo en polea", "musculo": "espalda", "imagen": "assets/exercises/seated_row.jpg" },
+  { "id": "tbar_row", "nombre": "Remo T-Bar", "musculo": "espalda", "imagen": "assets/exercises/tbar_row.jpg" },
+  { "id": "face_pull", "nombre": "Face pull", "musculo": "espalda", "imagen": "assets/exercises/face_pull.jpg" },
+
+  { "id": "back_squat", "nombre": "Sentadilla", "musculo": "piernas", "imagen": "assets/exercises/back_squat.jpg" },
+  { "id": "front_squat", "nombre": "Sentadilla frontal", "musculo": "piernas", "imagen": "assets/exercises/front_squat.jpg" },
+  { "id": "leg_press", "nombre": "Prensa", "musculo": "piernas", "imagen": "assets/exercises/leg_press.jpg" },
+  { "id": "leg_extension", "nombre": "Extensión de cuádriceps", "musculo": "piernas", "imagen": "assets/exercises/leg_extension.jpg" },
+  { "id": "leg_curl", "nombre": "Curl femoral", "musculo": "piernas", "imagen": "assets/exercises/leg_curl.jpg" },
+  { "id": "romanian_deadlift", "nombre": "Peso muerto rumano", "musculo": "piernas", "imagen": "assets/exercises/romanian_deadlift.jpg" },
+  { "id": "calf_raise", "nombre": "Elevación de gemelos", "musculo": "piernas", "imagen": "assets/exercises/calf_raise.jpg" },
+
+  { "id": "ohp", "nombre": "Press militar", "musculo": "hombros", "imagen": "assets/exercises/ohp.jpg" },
+  { "id": "db_shoulder_press", "nombre": "Press hombro mancuernas", "musculo": "hombros", "imagen": "assets/exercises/db_shoulder_press.jpg" },
+  { "id": "lateral_raise", "nombre": "Elevaciones laterales", "musculo": "hombros", "imagen": "assets/exercises/lateral_raise.jpg" },
+  { "id": "front_raise", "nombre": "Elevaciones frontales", "musculo": "hombros", "imagen": "assets/exercises/front_raise.jpg" },
+  { "id": "rear_delt_fly", "nombre": "Pájaros", "musculo": "hombros", "imagen": "assets/exercises/rear_delt_fly.jpg" },
+
+  { "id": "barbell_curl", "nombre": "Curl con barra", "musculo": "biceps", "imagen": "assets/exercises/barbell_curl.jpg" },
+  { "id": "ez_curl", "nombre": "Curl barra Z", "musculo": "biceps", "imagen": "assets/exercises/ez_curl.jpg" },
+  { "id": "hammer_curl", "nombre": "Curl martillo", "musculo": "biceps", "imagen": "assets/exercises/hammer_curl.jpg" },
+  { "id": "concentration_curl", "nombre": "Curl concentración", "musculo": "biceps", "imagen": "assets/exercises/concentration_curl.jpg" },
+
+  { "id": "triceps_pushdown", "nombre": "Extensión de tríceps en polea", "musculo": "triceps", "imagen": "assets/exercises/triceps_pushdown.jpg" },
+  { "id": "skull_crushers", "nombre": "Rompecráneos", "musculo": "triceps", "imagen": "assets/exercises/skull_crushers.jpg" },
+  { "id": "overhead_triceps", "nombre": "Extensión tríceps por encima", "musculo": "triceps", "imagen": "assets/exercises/overhead_triceps.jpg" },
+  { "id": "bench_dips", "nombre": "Fondos en banco", "musculo": "triceps", "imagen": "assets/exercises/bench_dips.jpg" }
+]

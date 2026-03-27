@@ -1,0 +1,38 @@
+<section
+  class="relative overflow-hidden rounded-2xl border border-white/15 bg-[radial-gradient(circle_at_0%_0%,color-mix(in_srgb,var(--app-primary)_20%,transparent)_0%,transparent_36%),radial-gradient(circle_at_100%_100%,color-mix(in_srgb,#22c55e_22%,transparent)_0%,transparent_32%),linear-gradient(155deg,#0d1117_0%,#111827_55%,#101726_100%)] p-4 text-slate-50 shadow-[0_14px_35px_-24px_rgba(2,6,23,0.8),inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-6"
+>
+  <header class="mb-5">
+    <p class="m-0 text-[0.72rem] uppercase tracking-[0.18em] text-slate-100/70">Gym Tracker</p>
+    <h1 class="mt-1.5 text-[clamp(1.3rem,4.4vw,2rem)] font-extrabold leading-[1.1]">Elegí tu día de entrenamiento</h1>
+    <p class="m-0 mt-1.5 max-w-[62ch] text-[0.95rem] text-slate-100/80">
+      Entrá directo a tu rutina diaria, registrá series y seguí el progreso con menos fricción.
+    </p>
+  </header>
+
+  <div class="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+    <button
+      type="button"
+      class="rounded-xl border border-slate-400/30 bg-gradient-to-br from-white/10 to-slate-300/5 px-3 py-3 text-left text-inherit backdrop-blur-[2px] transition duration-150 hover:-translate-y-0.5 hover:border-slate-300/60 hover:shadow-[0_12px_22px_-20px_rgba(15,23,42,0.95)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400/95"
+      *ngFor="let d of weekdays"
+      [ngClass]="{
+        '!border-[color-mix(in_srgb,var(--app-primary)_72%,white)]': d.key === today,
+        '!bg-[linear-gradient(145deg,color-mix(in_srgb,var(--app-primary)_34%,transparent),rgba(255,255,255,0.08))]': d.key === today,
+        '!shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--app-primary)_40%,transparent)]': d.key === today
+      }"
+      (click)="selectDay(d.key)"
+    >
+      <span class="block text-[0.96rem] font-bold">{{ d.label }}</span>
+      <span class="mt-0.5 block text-[0.72rem] uppercase tracking-[0.03em] text-slate-100/70">
+        {{ d.key === today ? 'Hoy' : 'Abrir sesión' }}
+      </span>
+    </button>
+  </div>
+
+  <footer class="mt-4 flex items-center gap-2 text-[0.78rem] text-slate-200/85">
+    <div
+      class="h-2 w-2 shrink-0 rounded-full bg-[color-mix(in_srgb,var(--app-primary)_74%,white)] shadow-[0_0_0_5px_color-mix(in_srgb,var(--app-primary)_20%,transparent)]"
+      aria-hidden="true"
+    ></div>
+    <p class="m-0">Al tocar un día se abre la vista con los ejercicios programados para esa jornada.</p>
+  </footer>
+</section>

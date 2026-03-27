@@ -1,0 +1,121 @@
+<section class="grid gap-4">
+  <header
+    class="relative isolate overflow-hidden rounded-2xl border border-slate-300/15 bg-[radial-gradient(circle_at_90%_15%,rgba(202,255,44,0.14),transparent_35%),linear-gradient(145deg,#0b111b_0%,#0d1522_40%,#121d2e_100%)] p-4 text-slate-100 shadow-[0_18px_45px_rgba(0,0,0,0.34),inset_0_1px_0_rgba(255,255,255,0.06)]"
+  >
+    <div
+      class="pointer-events-none absolute inset-[-30%_48%_-30%_-20%] -rotate-[14deg] bg-[linear-gradient(140deg,rgba(202,255,44,0.18),rgba(202,255,44,0)_64%)]"
+    ></div>
+
+    <div class="relative z-10 flex items-center justify-between gap-2.5">
+      <span class="whitespace-nowrap text-[0.7rem] tracking-[0.14em] text-slate-100/75">GYM TRACKER / OFFLINE-FIRST</span>
+      <span
+        class="rounded-full border px-2.5 py-1 text-[0.66rem] font-semibold tracking-[0.06em] text-center text-xs"
+        [ngClass]="
+          routineStore.hasRoutine()
+            ? 'border-lime-300/40 bg-lime-300/15 text-lime-100'
+            : 'border-white/15 bg-white/5 text-slate-100/85'
+        "
+      >
+        {{ routineStore.hasRoutine() ? 'RUTINA ACTIVA' : 'SIN RUTINA' }}
+      </span>
+    </div>
+
+    <h1 class="relative z-10 mt-3 text-[clamp(2.1rem,8vw,3.2rem)] font-black uppercase leading-[0.92] tracking-[0.035em]">
+      TRAIN TODAY
+    </h1>
+    <p class="relative z-10 mt-2 max-w-[28ch] text-[0.9rem] leading-[1.35] text-slate-400">
+      Cada sesión cuenta. Registrá, progresá, repetí.
+    </p>
+
+    <div class="relative z-10 mt-4">
+      <a
+        pButton
+        class="!w-full !rounded-xl !border-0 !bg-lime-300 !font-bold !text-slate-950 !shadow-[0_10px_24px_rgba(202,255,44,0.25)] transition duration-150 hover:!-translate-y-px hover:!shadow-[0_14px_28px_rgba(202,255,44,0.35)]"
+        routerLink="/entrenamiento"
+        label="Empezar entrenamiento"
+        icon="pi pi-bolt"
+      ></a>
+    </div>
+  </header>
+
+  <a
+    class="group grid grid-cols-[auto_1fr_auto] items-center gap-3 rounded-2xl border border-slate-300/15 bg-[linear-gradient(160deg,#0f1724_0%,#131f31_100%)] p-4 no-underline shadow-[0_10px_26px_rgba(0,0,0,0.2)] transition duration-150 hover:-translate-y-0.5 hover:border-lime-300/35 hover:shadow-[0_14px_30px_rgba(0,0,0,0.26)]"
+    routerLink="/rutina"
+  >
+    <span
+      class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-lime-300 text-base text-slate-950 shadow-[inset_0_0_0_1px_rgba(11,15,22,0.15)]"
+    >
+      <span class="pi pi-sliders-h"></span>
+    </span>
+    <div>
+      <h2 class="m-0 text-[0.94rem] font-bold leading-[1.2] text-slate-100">Configurar rutina</h2>
+      <p class="m-0 mt-1 text-[0.78rem] leading-[1.35] text-slate-400">
+        {{ routineStore.hasRoutine() ? 'Editar días y ejercicios' : 'Creá tu plan semanal' }}
+      </p>
+    </div>
+    <span class="pi pi-arrow-right text-slate-400 transition duration-150 group-hover:translate-x-0.5 group-hover:text-slate-100"></span>
+  </a>
+
+  <div
+    class="rounded-2xl border border-rose-300/20 bg-[linear-gradient(160deg,#140d12_0%,#1a1018_100%)] p-4 shadow-[0_10px_26px_rgba(0,0,0,0.2)]"
+  >
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <h2 class="m-0 text-[0.94rem] font-bold leading-[1.2] text-slate-100">Restablecer base local</h2>
+        <p class="m-0 mt-1 max-w-[52ch] text-[0.78rem] leading-[1.35] text-slate-400">
+          Borra rutina y entrenamientos guardados en este dispositivo y vuelve al estado inicial.
+        </p>
+      </div>
+      <button
+        pButton
+        type="button"
+        class="!rounded-xl !border !border-rose-300/25 !bg-rose-500/10 !text-rose-100 hover:!border-rose-300/40 hover:!bg-rose-500/15"
+        icon="pi pi-trash"
+        label="Reset DB"
+        (click)="resetDb()"
+        [disabled]="resetting()"
+      ></button>
+    </div>
+  </div>
+
+  <div
+    class="rounded-2xl border border-slate-300/15 bg-[linear-gradient(160deg,#0f1724_0%,#131f31_100%)] p-4 shadow-[0_10px_26px_rgba(0,0,0,0.2)]"
+  >
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <h2 class="m-0 text-[0.94rem] font-bold leading-[1.2] text-slate-100">Backup / Restore</h2>
+        <p class="m-0 mt-1 max-w-[52ch] text-[0.78rem] leading-[1.35] text-slate-400">
+          Exportá tu base local a un archivo JSON o importá un backup para restaurarla.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button
+          pButton
+          type="button"
+          class="!rounded-xl !border !border-white/15 !bg-white/5 !text-slate-100 hover:!border-lime-300/35 hover:!bg-lime-300/10"
+          icon="pi pi-download"
+          label="Exportar"
+          (click)="onExportDb()"
+          [disabled]="exporting() || importing() || resetting()"
+        ></button>
+
+        <button
+          pButton
+          type="button"
+          class="!rounded-xl !border !border-white/15 !bg-white/5 !text-slate-100 hover:!border-lime-300/35 hover:!bg-lime-300/10"
+          icon="pi pi-upload"
+          label="Importar"
+          (click)="fileInput.click()"
+          [disabled]="exporting() || importing() || resetting()"
+        ></button>
+        <input
+          #fileInput
+          type="file"
+          accept="application/json"
+          class="hidden"
+          (change)="onImportDbFile($event)"
+        />
+      </div>
+    </div>
+  </div>
+</section>

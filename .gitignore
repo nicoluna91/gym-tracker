@@ -29,6 +29,9 @@ yarn-error.log
 !.vscode/mcp.json
 .history/*
 
+# Cursor (user-specific skills)
+.cursor/skills/
+
 # Miscellaneous
 /.angular/cache
 .sass-cache/

@@ -1,0 +1,142 @@
+<section class="relative p-1">
+  <header
+    class="relative mb-4 flex flex-col gap-4 rounded-2xl border border-[color-mix(in_srgb,var(--app-border)_70%,transparent)] bg-[radial-gradient(circle_at_0%_0%,color-mix(in_srgb,#22d3ee_16%,transparent),transparent_54%),linear-gradient(135deg,color-mix(in_srgb,var(--app-surface-2)_75%,#07162d),var(--app-surface))] p-5 sm:flex-row sm:items-start sm:justify-between"
+  >
+    <div
+      class="pointer-events-none absolute left-0 top-0 h-32 w-32 rounded-full bg-[color-mix(in_srgb,#22d3ee_20%,transparent)] blur-3xl"
+      aria-hidden="true"
+    ></div>
+    <div class="relative z-10">
+      <div class="text-[0.68rem] uppercase tracking-[0.18em] text-[var(--app-fg-muted)]">Sesión del día</div>
+      <h1 class="mt-1 text-[clamp(1.4rem,3vw,2rem)] font-extrabold leading-[1.1]">{{ selectedWeekdayLabel() }}</h1>
+      <p class="mt-2 max-w-[40ch] text-[0.85rem] text-[var(--app-fg-muted)]">
+        Registrá tus series y controlá el volumen total de tu entrenamiento.
+      </p>
+    </div>
+    <div class="relative z-10 w-full sm:w-auto">
+      <button
+        pButton
+        type="button"
+        class="w-full sm:w-auto"
+        label="Volver a días"
+        icon="pi pi-arrow-left"
+        severity="secondary"
+        (click)="goBack()"
+      ></button>
+    </div>
+  </header>
+
+  <section
+    class="mb-4 rounded-xl border border-[color-mix(in_srgb,var(--app-border)_70%,transparent)] bg-[linear-gradient(125deg,color-mix(in_srgb,var(--app-surface-2)_80%,#021016),color-mix(in_srgb,var(--app-surface)_92%,#0f172a))] px-4 py-3.5"
+  >
+    <div class="text-[0.72rem] uppercase tracking-[0.12em] text-[var(--app-fg-muted)]">Volumen total</div>
+    <div class="mt-1 text-[1.8rem] font-extrabold leading-none">{{ workoutStore.totalVolume() }}</div>
+    <div class="mt-1.5 text-[0.76rem] text-[var(--app-fg-muted)]">Suma de peso por repeticiones registradas.</div>
+  </section>
+
+  <div
+    class="mt-6 grid justify-items-center gap-2 rounded-xl border border-dashed border-[var(--app-border)] px-4 py-8 text-center"
+    *ngIf="!dayExercises().length"
+  >
+    <i class="pi pi-calendar-times text-[1.3rem] text-[var(--app-fg-muted)]" aria-hidden="true"></i>
+    <div class="text-base font-bold">No hay ejercicios para este día</div>
+    <div class="max-w-[45ch] text-[0.85rem] text-[var(--app-fg-muted)]">
+      Configurá la rutina del día y volvé para comenzar a registrar series.
+    </div>
+  </div>
+
+  <section class="mt-4 grid gap-3" *ngIf="dayExercises().length">
+    <article
+      class="flex flex-col gap-3 rounded-2xl border border-[color-mix(in_srgb,var(--app-border)_85%,transparent)] bg-[linear-gradient(100deg,color-mix(in_srgb,var(--app-surface)_94%,transparent),var(--app-surface)),repeating-linear-gradient(-45deg,color-mix(in_srgb,#22d3ee_3%,transparent)_0,color-mix(in_srgb,#22d3ee_3%,transparent)_9px,transparent_9px,transparent_18px)] p-4"
+      *ngFor="let ex of dayExercises(); let i = index"
+      [style.animation-delay.ms]="i * 70"
+    >
+      <div class="flex gap-4">
+        <div class="flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[color-mix(in_srgb,var(--app-border)_60%,transparent)] bg-slate-800 text-slate-400">
+          <img
+            [src]="ex.imagen"
+            [alt]="ex.nombre"
+            class="h-full w-full object-cover"
+            (error)="onImgError($event)"
+          />
+          <span class="pi pi-bolt text-2xl" style="display: none"></span>
+        </div>
+        <div class="min-w-0 flex-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <h2 class="m-0 text-base font-bold">{{ ex.nombre }}</h2>
+            <span
+              class="inline-flex items-center rounded-full border border-[color-mix(in_srgb,#22d3ee_35%,var(--app-border))] px-2 py-0.5 text-[0.7rem] uppercase tracking-[0.06em] text-[color-mix(in_srgb,var(--app-fg)_86%,#22d3ee)]"
+            >
+              {{ ex.musculo }}
+            </span>
+          </div>
+
+          <div class="mt-2.5 flex flex-wrap gap-4">
+            <div class="grid">
+              <span class="text-[0.7rem] uppercase tracking-[0.08em] text-[var(--app-fg-muted)]">Series</span>
+              <span class="text-[0.95rem] font-bold">{{ setCountForExercise(ex.id) }}</span>
+            </div>
+            <div class="grid">
+              <span class="text-[0.7rem] uppercase tracking-[0.08em] text-[var(--app-fg-muted)]">Volumen</span>
+              <span class="text-[0.95rem] font-bold">{{ volumeForExercise(ex.id) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full">
+        <button
+          pButton
+          type="button"
+          class="w-full sm:w-auto"
+          label="Agregar serie"
+          icon="pi pi-plus"
+          (click)="openAddSet(ex.id)"
+        ></button>
+      </div>
+    </article>
+  </section>
+</section>
+
+<p-dialog
+  header="Agregar serie"
+  [(visible)]="addSetVisible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '22rem' }"
+>
+  <div class="flex flex-col gap-3">
+    <p-inputNumber
+      inputId="peso"
+      styleClass="w-full"
+      [ngModel]="peso()"
+      (ngModelChange)="peso.set($event)"
+      placeholder="Peso"
+      [min]="0"
+      [step]="0.5"
+    ></p-inputNumber>
+    <p-inputNumber
+      inputId="reps"
+      styleClass="w-full"
+      [ngModel]="reps()"
+      (ngModelChange)="reps.set($event)"
+      placeholder="Repeticiones"
+      [min]="0"
+      [step]="1"
+    ></p-inputNumber>
+
+    <div class="flex gap-2">
+      <button pButton class="flex-1" type="button" label="Guardar" (click)="saveSet()"></button>
+      <button
+        pButton
+        class="flex-1"
+        type="button"
+        label="Cancelar"
+        severity="secondary"
+        (click)="addSetVisible = false"
+      ></button>
+    </div>
+  </div>
+</p-dialog>

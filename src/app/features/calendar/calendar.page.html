@@ -1,0 +1,129 @@
+<section class="app-calendar-page grid gap-4">
+  <p-card header="Calendario">
+    <p class="m-0 text-sm text-[var(--app-fg-muted)]">
+      Días con entrenamiento registrado llevan un indicador. Tocá un día para ver series, peso y volumen.
+    </p>
+
+    <div
+      class="relative mt-4 min-h-[18rem] rounded-xl border border-[var(--app-border)] bg-[var(--app-surface-2)] p-2"
+      *ngIf="metricsStore.loading()"
+    >
+      <div class="absolute inset-0 flex items-center justify-center text-sm text-[var(--app-fg-muted)]">
+        Cargando…
+      </div>
+    </div>
+
+    <div class="app-calendar-wrap mt-4" *ngIf="!metricsStore.loading()">
+      <p-datepicker
+        [inline]="true"
+        [showOtherMonths]="true"
+        [selectOtherMonths]="true"
+        [firstDayOfWeek]="1"
+        [showWeek]="false"
+        dateFormat="dd/mm/yy"
+        (onSelect)="onDateSelect($event)"
+      >
+        <ng-template pTemplate="date" let-date>
+          <span class="app-cal-cell flex flex-col items-center justify-center gap-0.5 py-0.5">
+            <span class="text-[0.95rem] font-medium leading-none">{{ date.day }}</span>
+            <span
+              *ngIf="hasSession(date)"
+              class="app-cal-dot h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_0_3px_color-mix(in_srgb,emerald_22%,transparent)]"
+              aria-hidden="true"
+            ></span>
+            <span *ngIf="!hasSession(date)" class="h-1.5 w-1.5 shrink-0" aria-hidden="true"></span>
+          </span>
+        </ng-template>
+      </p-datepicker>
+    </div>
+
+    <div
+      class="mt-4 flex flex-wrap items-center gap-2 rounded-lg border border-dashed border-[var(--app-border)] px-3 py-2 text-[0.78rem] text-[var(--app-fg-muted)]"
+    >
+      <span
+        class="inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_3px_color-mix(in_srgb,emerald_22%,transparent)]"
+        aria-hidden="true"
+      ></span>
+      <span>Indica al menos una serie guardada ese día.</span>
+    </div>
+  </p-card>
+</section>
+
+<p-dialog
+  [header]="dialogTitle()"
+  [(visible)]="detailVisible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="true"
+  [style]="{ width: 'min(22rem, calc(100vw - 2rem))' }"
+  [contentStyle]="{ maxHeight: 'min(70vh, 28rem)', overflow: 'auto' }"
+>
+  <ng-container *ngIf="selectedIso() as iso">
+    <div *ngIf="dayTotalVolume() === 0" class="py-6 text-center text-sm text-[var(--app-fg-muted)]">
+      No hay series registradas para esta fecha.
+    </div>
+
+    <div *ngIf="dayTotalVolume() > 0" class="flex flex-col gap-3">
+      <div
+        class="rounded-lg border border-[color-mix(in_srgb,#22d3ee_28%,var(--app-border))] bg-[linear-gradient(125deg,color-mix(in_srgb,var(--app-surface-2)_88%,#021016),var(--app-surface))] px-3 py-2.5"
+      >
+        <div class="text-[0.65rem] uppercase tracking-[0.14em] text-[var(--app-fg-muted)]">Volumen del día</div>
+        <div class="text-xl font-extrabold leading-tight text-[var(--app-fg)]">{{ dayTotalVolume() | number : '1.0-0' }}</div>
+        <div class="mt-0.5 text-[0.72rem] text-[var(--app-fg-muted)]">Suma de peso × repeticiones</div>
+      </div>
+
+      <article
+        *ngFor="let row of sessionRows(); trackBy: trackByExercise"
+        class="rounded-xl border border-[var(--app-border)] bg-[var(--app-surface)] p-3"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <h3 class="m-0 text-sm font-bold text-[var(--app-fg)]">{{ row.name }}</h3>
+            <span
+              *ngIf="row.muscle"
+              class="inline-flex rounded-full border border-[color-mix(in_srgb,#22d3ee_35%,var(--app-border))] px-2 py-0.5 text-[0.65rem] uppercase tracking-[0.06em] text-[color-mix(in_srgb,var(--app-fg)_86%,#22d3ee)]"
+            >
+              {{ row.muscle }}
+            </span>
+          </div>
+
+          <button
+            pButton
+            type="button"
+            class="shrink-0"
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            [text]="true"
+            title="Borrar series de este ejercicio"
+            (click)="deleteExerciseSets(row.exerciseId)"
+          ></button>
+        </div>
+
+        <div class="mt-2 text-[0.72rem] text-[var(--app-fg-muted)]">
+          Volumen ejercicio:
+          <span class="font-semibold text-[var(--app-fg)]">{{ row.totalVolume | number : '1.0-0' }}</span>
+        </div>
+
+        <ul class="mt-2.5 grid gap-1.5 border-t border-[var(--app-border)] pt-2.5">
+          <li
+            *ngFor="let s of row.sets; let i = index"
+            class="flex flex-wrap items-baseline justify-between gap-2 text-[0.82rem]"
+          >
+            <span class="text-[var(--app-fg-muted)]">Serie {{ i + 1 }}</span>
+            <span class="font-medium text-[var(--app-fg)]">
+              {{ s.peso }} kg × {{ s.repeticiones }} reps
+              <span class="text-[var(--app-fg-muted)]"> · {{ s.volume | number : '1.0-0' }}</span>
+            </span>
+          </li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="mt-4 flex justify-end">
+      <button pButton type="button" label="Cerrar" severity="secondary" (click)="detailVisible = false"></button>
+    </div>
+  </ng-container>
+</p-dialog>

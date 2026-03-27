@@ -1,0 +1,53 @@
+<p-card header="Métricas">
+  <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+    <div class="text-sm text-[var(--app-fg-muted)]">PRs y volumen.</div>
+    <a
+      routerLink="/calendario"
+      class="inline-flex items-center gap-1 text-sm font-medium text-[color-mix(in_srgb,#22d3ee_88%,var(--app-fg))] no-underline hover:underline"
+    >
+      <span class="pi pi-calendar text-xs"></span>
+      Calendario de sesiones
+    </a>
+  </div>
+
+  <div class="mt-4">
+    <div class="text-sm font-semibold text-[var(--app-fg)]">PR peso (máximo histórico)</div>
+    <div class="mt-2 flex flex-col gap-2">
+      <div
+        class="rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)] p-3"
+        *ngFor="let row of prRows()"
+      >
+        <div class="flex items-center justify-between">
+          <div class="text-sm text-[var(--app-fg)]">{{ row.name }}</div>
+          <div class="text-sm font-semibold">{{ row.value }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <div class="text-sm font-semibold text-[var(--app-fg)]">Volumen por día</div>
+        <div class="text-xs text-[var(--app-fg-muted)]">Segmentado por ejercicio (por grupo muscular).</div>
+      </div>
+    </div>
+
+    <div class="mt-3 flex flex-wrap gap-2">
+      <button
+        pButton
+        type="button"
+        *ngFor="let m of muscles()"
+        class="!h-8 !px-3 !text-xs !font-semibold !rounded-lg"
+        [label]="labelMuscle(m)"
+        [outlined]="selectedMuscle() !== m"
+        severity="secondary"
+        (click)="selectedMuscle.set(m)"
+      ></button>
+    </div>
+
+    <div class="mt-3 h-[60vh]">
+      <p-chart class="h-full" type="bar" [data]="volumeChartDataByMuscle()" [options]="chartOptions"></p-chart>
+    </div>
+  </div>
+</p-card>

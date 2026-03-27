@@ -1,0 +1,41 @@
+<p-card header="Semana">
+  <div class="text-sm text-[var(--app-fg-muted)]">Tocá un día para ver la rutina o entrenar.</div>
+
+  <div class="mt-4 flex flex-col gap-2">
+    <a
+      class="rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)] p-3"
+      *ngFor="let d of weekdays"
+      [routerLink]="dayLink(d.key)"
+    >
+      <ng-container *ngIf="dayInfo(d.key) as info">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <div class="text-sm font-semibold text-[var(--app-fg)]">{{ d.label }}</div>
+            <div class="mt-1 text-xs text-[var(--app-fg-muted)]">
+              <span *ngIf="info.hasRoutine; else noRoutine">
+                {{ info.muscle }} · {{ info.exerciseCount }} ejercicios
+              </span>
+              <ng-template #noRoutine>Sin rutina</ng-template>
+            </div>
+          </div>
+
+          <div class="shrink-0">
+            <span
+              class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium"
+              [class.bg-emerald-50]="info.hasRoutine"
+              [class.text-emerald-700]="info.hasRoutine"
+              [class.bg-[var(--app-surface-2)]]="!info.hasRoutine"
+              [class.text-[var(--app-fg)]]="!info.hasRoutine"
+            >
+              {{ info.hasRoutine ? 'Entrenar' : 'Configurar rutina' }}
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </a>
+  </div>
+
+  <div class="mt-4">
+    <a pButton class="w-full" label="Editar rutina" routerLink="/rutina"></a>
+  </div>
+</p-card>
