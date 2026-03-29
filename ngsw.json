@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1774766639585,
+  "timestamp": 1774767348073,
   "index": "/gym-tracker/index.html",
   "assetGroups": [
     {
@@ -40,7 +40,7 @@
         "/gym-tracker/index.html",
         "/gym-tracker/main-FV3V3F22.js",
         "/gym-tracker/manifest.webmanifest",
-        "/gym-tracker/styles-X55PRN2V.css"
+        "/gym-tracker/styles-JIPAN6MX.css"
       ],
       "patterns": []
     },
@@ -106,14 +106,14 @@
     "/gym-tracker/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
     "/gym-tracker/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
     "/gym-tracker/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
-    "/gym-tracker/index.html": "bf67a0edb2c4bc5ca1c655fc94c2a7b42d266708",
+    "/gym-tracker/index.html": "343b2833fc07c4b046a1e9c50fa0d239456fb454",
     "/gym-tracker/main-FV3V3F22.js": "fbe597d70508f57766687562e3d972a77546e2bd",
     "/gym-tracker/manifest.webmanifest": "96b0c2f8ba8d46ec02be9c3336f5bf52f860caee",
     "/gym-tracker/media/primeicons-4GST5W3O.woff2": "837c1279b6af9d297f34fdb43e6fcc9206a79f32",
     "/gym-tracker/media/primeicons-DHQU4SEP.svg": "a07ae39027c1a780b42fd82fad7575c2924d9d28",
     "/gym-tracker/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
     "/gym-tracker/media/primeicons-P53SE5CV.woff": "361e3af71bb4e515feead2f787348a92a5527158",
-    "/gym-tracker/styles-X55PRN2V.css": "06b4209d2913a3aa66102e9d0fa325364b40eff3"
+    "/gym-tracker/styles-JIPAN6MX.css": "3e4638222a59a7559993fd0fb0751029d613be2d"
   },
   "navigationUrls": [
     {
