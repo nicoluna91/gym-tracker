@@ -1,0 +1,1 @@
+var e=[{key:"lunes",label:"Lunes"},{key:"martes",label:"Martes"},{key:"miercoles",label:"Mi\xE9rcoles"},{key:"jueves",label:"Jueves"},{key:"viernes",label:"Viernes"},{key:"sabado",label:"S\xE1bado"},{key:"domingo",label:"Domingo"}];export{e as a};

@@ -1,0 +1,1 @@
+function n(){return new Date().toISOString().slice(0,10)}function r(t){return t.toISOString().slice(0,10)}function e(t){return new Date(t.year,t.month,t.day).toISOString().slice(0,10)}export{n as a,r as b,e as c};
