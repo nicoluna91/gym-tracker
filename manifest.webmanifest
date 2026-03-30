@@ -4,8 +4,8 @@
   "description": "Seguimiento de rutinas y entrenamientos en el gimnasio",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#0b111b",
-  "background_color": "#0b111b",
+  "theme_color": "#0b1220",
+  "background_color": "#0b1220",
   "scope": "./",
   "start_url": "./",
   "icons": [

@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1774849087663,
+  "timestamp": 1774849813053,
   "index": "/gym-tracker/index.html",
   "assetGroups": [
     {
@@ -134,9 +134,9 @@
     "/gym-tracker/icons/icon-512x512.png": "efe80d86a3915a6433d5e5e30448af88c7051a39",
     "/gym-tracker/icons/icon-72x72.png": "5ba1570c2b255b171a5a8a800155d4d84ddf8333",
     "/gym-tracker/icons/icon-96x96.png": "36f428c6d975d1adc484933cc60fa0e3db7f9466",
-    "/gym-tracker/index.html": "8db5a1cbe8dac059fe3b25a150cfee5e90e9e4fa",
+    "/gym-tracker/index.html": "753199d6aacd3a028ed7aae3f9f6f84ed34e0b56",
     "/gym-tracker/main-6O5MJ7SF.js": "62f0545e355e88e2a0f1e7277acad2e79525fc71",
-    "/gym-tracker/manifest.webmanifest": "60941bb5286762d336266dba949e5394ad6f4ce8",
+    "/gym-tracker/manifest.webmanifest": "8dc9dc85d10cb98731c53ce05a95d7c411a2c91e",
     "/gym-tracker/media/primeicons-4GST5W3O.woff2": "837c1279b6af9d297f34fdb43e6fcc9206a79f32",
     "/gym-tracker/media/primeicons-DHQU4SEP.svg": "a07ae39027c1a780b42fd82fad7575c2924d9d28",
     "/gym-tracker/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
