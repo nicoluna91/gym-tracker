@@ -1,7 +1,11 @@
 {
-  "name": "gym-tracker",
-  "short_name": "gym-tracker",
+  "name": "Gym Tracker",
+  "short_name": "GymTracker",
+  "description": "Seguimiento de rutinas y entrenamientos en el gimnasio",
   "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0b111b",
+  "background_color": "#0b111b",
   "scope": "./",
   "start_url": "./",
   "icons": [
